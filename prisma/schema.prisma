@@ -1,0 +1,119 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../src/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+enum JobStatus {
+    ACTIVE
+    INACTIVE
+}
+
+enum JobLevel {
+    BEGINNER
+    INTERMEDIATE
+    SENIOR
+}
+
+enum JobCategory {
+    PROGRAMMING
+    MARKETING
+    DESIGNING
+    ACCOUNTING
+    ANALYTICS
+}
+
+enum ApplicationStatus {
+    PENDING
+    ACCEPTED
+    REJECTED
+}
+
+// ---------- Candidate (authenticated by Clerk) ----------
+model Candidate {
+    id        String   @id @default(cuid())
+    clerkId   String   @unique
+    email     String   @unique
+    name      String?
+    imageUrl  String?
+    createdAt DateTime @default(now())
+
+    // Reusable resume. "Edit" simply replaces these fields.
+    resumeUrl       String?
+    resumePublicId  String?
+    resumeFileName  String?
+    resumeUpdatedAt DateTime?
+
+    applications Application[]
+}
+
+// ---------- Recruiter (custom auth + Brevo verification) ----------
+model Recruiter {
+    id             String   @id @default(cuid())
+    name           String
+    email          String   @unique
+    passwordHash   String
+    emailVerified  Boolean  @default(false)
+    companyName    String
+    companyLogoUrl String?
+    createdAt      DateTime @default(now())
+
+    jobs         Job[]
+    verifyTokens EmailVerificationToken[]
+}
+
+model EmailVerificationToken {
+    id          String    @id @default(cuid())
+    tokenHash   String    @unique // store SHA-256 hash, never the raw token
+    expiresAt   DateTime
+    recruiterId String
+    recruiter   Recruiter @relation(fields: [recruiterId], references: [id], onDelete: Cascade)
+
+    @@index([recruiterId])
+}
+
+// ---------- Job ----------
+model Job {
+    id               String      @id @default(cuid())
+    title            String
+    description      String      @db.Text
+    responsibilities String[] // "Key responsibility" list on detail page
+    skills           String[] // "Skills required" list
+    category         JobCategory
+    level            JobLevel
+    location         String
+    salaryMin        Int?
+    salaryMax        Int?
+    status           JobStatus   @default(ACTIVE)
+    createdAt        DateTime    @default(now())
+    updatedAt        DateTime    @updatedAt
+
+    recruiterId  String
+    recruiter    Recruiter     @relation(fields: [recruiterId], references: [id], onDelete: Cascade)
+    applications Application[]
+
+    @@index([status, createdAt])
+    @@index([category])
+    @@index([location])
+    @@index([recruiterId])
+}
+
+// ---------- Application (the link between candidate and job) ----------
+model Application {
+    id        String            @id @default(cuid())
+    status    ApplicationStatus @default(PENDING)
+    resumeUrl String // snapshot of the resume at apply time
+    createdAt DateTime          @default(now())
+
+    candidateId String
+    jobId       String
+    candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+    job         Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+    @@unique([candidateId, jobId]) // a candidate can never apply twice to the same job
+    @@index([jobId, status])
+    @@index([candidateId])
+}
