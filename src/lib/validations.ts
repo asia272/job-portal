@@ -25,3 +25,29 @@ export function toFieldErrors(issues: { path: PropertyKey[]; message: string }[]
     }
     return out;
 }
+
+const optionalInt = z.preprocess(
+    (v) => (v === "" || v == null ? undefined : Number(v)),
+    z.number().int().min(0).max(100_000_000).optional()
+);
+
+export const jobSchema = z
+    .object({
+        title: z.string().trim().min(3, "Title must be at least 3 characters").max(120),
+        description: z
+            .string()
+            .trim()
+            .min(30, "Description must be at least 30 characters")
+            .max(5000),
+        category: z.enum(["PROGRAMMING", "MARKETING", "DESIGNING", "ACCOUNTING", "ANALYTICS"]),
+        level: z.enum(["BEGINNER", "INTERMEDIATE", "SENIOR"]),
+        location: z.string().trim().min(2, "Enter a location").max(100),
+        salaryMin: optionalInt,
+        salaryMax: optionalInt,
+        responsibilities: z.array(z.string().max(300)).max(20, "Maximum 20 lines"),
+        skills: z.array(z.string().max(300)).max(20, "Maximum 20 lines"),
+    })
+    .refine(
+        (d) => d.salaryMin == null || d.salaryMax == null || d.salaryMin <= d.salaryMax,
+        { message: "Maximum salary must be greater than minimum", path: ["salaryMax"] }
+    );
