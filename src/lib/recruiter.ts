@@ -16,11 +16,23 @@ export const getCurrentRecruiter = cache(async () => {
             email: true,
             companyName: true,
             companyLogoUrl: true,
+            passwordChangedAt: true,
             emailVerified: true,
         },
     });
 
     if (!recruiter || !recruiter.emailVerified) return null;
+
+    // Session was issued before the last password change: reject it
+    if (
+        recruiter.passwordChangedAt &&
+        session.issuedAt < Math.floor(recruiter.passwordChangedAt.getTime() / 1000)
+    ) {
+        return null;
+    }
+
+    return recruiter;
+
     return recruiter;
 });
 

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getCurrentCandidate } from "@/lib/candidate";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function applyToJob(rawJobId: string) {
     const jobId = z.string().cuid().safeParse(rawJobId);
@@ -11,7 +12,13 @@ export async function applyToJob(rawJobId: string) {
 
     const candidate = await getCurrentCandidate();
     if (!candidate) return { error: "Please login to apply for this job" };
-    if (!candidate.resumeUrl) return { error: "Please upload your resume before applying" };
+    if (!candidate.resumeUrl) {
+        return { error: "Please upload your resume before applying" };
+    }
+
+    const rl = await rateLimit("apply", candidate.id);
+
+    if (!rl.ok) return { error: rl.message };
 
     const job = await prisma.job.findUnique({ where: { id: jobId.data }, select: { status: true } });
     if (!job || job.status !== "ACTIVE") return { error: "This job is no longer available" };

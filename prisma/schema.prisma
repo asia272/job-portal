@@ -52,17 +52,20 @@ model Candidate {
 
 // ---------- Recruiter (custom auth + Brevo verification) ----------
 model Recruiter {
-    id             String   @id @default(cuid())
-    name           String
-    email          String   @unique
-    passwordHash   String
-    emailVerified  Boolean  @default(false)
-    companyName    String
-    companyLogoUrl String?
-    createdAt      DateTime @default(now())
+    id                String    @id @default(cuid())
+    name              String
+    email             String    @unique
+    passwordHash      String
+    emailVerified     Boolean   @default(false)
+    companyName       String
+    companyLogoUrl    String?
+    passwordChangedAt DateTime?
 
-    jobs         Job[]
-    verifyTokens EmailVerificationToken[]
+    createdAt DateTime @default(now())
+
+    jobs                Job[]
+    verifyTokens        EmailVerificationToken[]
+    passwordResetTokens PasswordResetToken[]
 }
 
 model EmailVerificationToken {
@@ -116,4 +119,14 @@ model Application {
     @@unique([candidateId, jobId]) // a candidate can never apply twice to the same job
     @@index([jobId, status])
     @@index([candidateId])
+}
+
+model PasswordResetToken {
+    id          String    @id @default(cuid())
+    tokenHash   String    @unique
+    expiresAt   DateTime
+    recruiterId String
+    recruiter   Recruiter @relation(fields: [recruiterId], references: [id], onDelete: Cascade)
+
+    @@index([recruiterId])
 }

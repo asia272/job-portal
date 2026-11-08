@@ -6,6 +6,9 @@ import { prisma } from "@/lib/prisma";
 import { requireRecruiter } from "@/lib/recruiter";
 import { jobSchema, toFieldErrors } from "@/lib/validations";
 import type { FormState } from "@/lib/form-state";
+import { after } from "next/server";
+import { rateLimit } from "@/lib/rate-limit";
+import { sendApplicationStatusEmail } from "@/lib/email";
 
 type ActionResult = { error?: string; success?: boolean };
 
@@ -63,7 +66,8 @@ export async function createJob(_prev: FormState, formData: FormData): Promise<F
     const result = parseJobForm(formData);
     if (!result.ok) return result.state;
     const { data, values } = result;
-
+    const rl = await rateLimit("createJob", recruiter.id);
+    if (!rl.ok) return { error: rl.message, values };
     try {
         await prisma.job.create({
             data: {
@@ -169,16 +173,51 @@ export async function updateApplicationStatus(
     const st = applicationStatusSchema.safeParse(status);
     if (!id.success || !st.success) return { error: "Invalid request" };
 
-    // The application must belong to one of THIS recruiter's jobs
-    const updated = await prisma.application.updateMany({
+    // Load it WITH the ownership check (must belong to one of this recruiter's jobs)
+    const application = await prisma.application.findFirst({
         where: { id: id.data, job: { recruiterId: recruiter.id } },
+        select: {
+            status: true,
+            candidate: { select: { email: true, name: true } },
+            job: { select: { title: true } },
+        },
+    });
+    if (!application) return { error: "Application not found" };
+    if (application.status === st.data) return { success: true };
+
+    // Only the request that really changes the status gets count 1,
+    // so a double click can never send two emails
+    const updated = await prisma.application.updateMany({
+        where: {
+            id: id.data,
+            job: { recruiterId: recruiter.id },
+            status: { not: st.data },
+        },
         data: { status: st.data },
     });
-    if (updated.count === 0) return { error: "Application not found" };
+
+    if (updated.count === 1 && st.data !== "PENDING") {
+        const decision = st.data; // "ACCEPTED" | "REJECTED"
+        // Sent after the response, so the recruiter's click stays fast.
+        // A failed email never undoes the status change.
+        after(async () => {
+            try {
+                await sendApplicationStatusEmail({
+                    to: application.candidate.email,
+                    name: application.candidate.name,
+                    jobTitle: application.job.title,
+                    company: recruiter.companyName,
+                    status: decision,
+                });
+            } catch (e) {
+                console.error("status email failed:", e);
+            }
+        });
+    }
 
     revalidatePath("/recruiter/applications");
     revalidatePath("/recruiter/dashboard");
     revalidatePath("/recruiter/jobs", "layout");
-    revalidatePath("/my-applications"); // candidate sees the new status
+    revalidatePath("/my-applications");
     return { success: true };
 }

@@ -24,7 +24,9 @@ export async function verifySessionToken(token: string) {
     const key = getKey();
     try {
         const { payload } = await jwtVerify(token, key, { algorithms: ["HS256"] });
-        return payload.sub ? { recruiterId: payload.sub } : null;
+        return payload.sub
+            ? { recruiterId: payload.sub, issuedAt: payload.iat ?? 0 }
+            : null;
     } catch {
         return null;
     }

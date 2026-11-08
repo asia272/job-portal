@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed:clean": "tsx prisma/seed.ts --clean",
     "lint": "eslint",
     "postinstall": "prisma skills sync || exit 0"
   },
@@ -39,6 +41,7 @@
     "eslint-config-next": "16.4.5",
     "prisma": "^7.10.1",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

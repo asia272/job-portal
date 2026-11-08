@@ -32,6 +32,7 @@ export type RecruiterMinAggregateOutputType = {
   emailVerified: boolean | null
   companyName: string | null
   companyLogoUrl: string | null
+  passwordChangedAt: Date | null
   createdAt: Date | null
 }
 
@@ -43,6 +44,7 @@ export type RecruiterMaxAggregateOutputType = {
   emailVerified: boolean | null
   companyName: string | null
   companyLogoUrl: string | null
+  passwordChangedAt: Date | null
   createdAt: Date | null
 }
 
@@ -54,6 +56,7 @@ export type RecruiterCountAggregateOutputType = {
   emailVerified: number
   companyName: number
   companyLogoUrl: number
+  passwordChangedAt: number
   createdAt: number
   _all: number
 }
@@ -67,6 +70,7 @@ export type RecruiterMinAggregateInputType = {
   emailVerified?: true
   companyName?: true
   companyLogoUrl?: true
+  passwordChangedAt?: true
   createdAt?: true
 }
 
@@ -78,6 +82,7 @@ export type RecruiterMaxAggregateInputType = {
   emailVerified?: true
   companyName?: true
   companyLogoUrl?: true
+  passwordChangedAt?: true
   createdAt?: true
 }
 
@@ -89,6 +94,7 @@ export type RecruiterCountAggregateInputType = {
   emailVerified?: true
   companyName?: true
   companyLogoUrl?: true
+  passwordChangedAt?: true
   createdAt?: true
   _all?: true
 }
@@ -173,6 +179,7 @@ export type RecruiterGroupByOutputType = {
   emailVerified: boolean
   companyName: string
   companyLogoUrl: string | null
+  passwordChangedAt: Date | null
   createdAt: Date
   _count: RecruiterCountAggregateOutputType | null
   _min: RecruiterMinAggregateOutputType | null
@@ -205,9 +212,11 @@ export type RecruiterWhereInput = {
   emailVerified?: Prisma.BoolFilter<"Recruiter"> | boolean
   companyName?: Prisma.StringFilter<"Recruiter"> | string
   companyLogoUrl?: Prisma.StringNullableFilter<"Recruiter"> | string | null
+  passwordChangedAt?: Prisma.DateTimeNullableFilter<"Recruiter"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Recruiter"> | Date | string
   jobs?: Prisma.JobListRelationFilter
   verifyTokens?: Prisma.EmailVerificationTokenListRelationFilter
+  passwordResetTokens?: Prisma.PasswordResetTokenListRelationFilter
 }
 
 export type RecruiterOrderByWithRelationInput = {
@@ -218,9 +227,11 @@ export type RecruiterOrderByWithRelationInput = {
   emailVerified?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   companyLogoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   jobs?: Prisma.JobOrderByRelationAggregateInput
   verifyTokens?: Prisma.EmailVerificationTokenOrderByRelationAggregateInput
+  passwordResetTokens?: Prisma.PasswordResetTokenOrderByRelationAggregateInput
 }
 
 export type RecruiterWhereUniqueInput = Prisma.AtLeast<{
@@ -234,9 +245,11 @@ export type RecruiterWhereUniqueInput = Prisma.AtLeast<{
   emailVerified?: Prisma.BoolFilter<"Recruiter"> | boolean
   companyName?: Prisma.StringFilter<"Recruiter"> | string
   companyLogoUrl?: Prisma.StringNullableFilter<"Recruiter"> | string | null
+  passwordChangedAt?: Prisma.DateTimeNullableFilter<"Recruiter"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Recruiter"> | Date | string
   jobs?: Prisma.JobListRelationFilter
   verifyTokens?: Prisma.EmailVerificationTokenListRelationFilter
+  passwordResetTokens?: Prisma.PasswordResetTokenListRelationFilter
 }, "id" | "email">
 
 export type RecruiterOrderByWithAggregationInput = {
@@ -247,6 +260,7 @@ export type RecruiterOrderByWithAggregationInput = {
   emailVerified?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   companyLogoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.RecruiterCountOrderByAggregateInput
   _max?: Prisma.RecruiterMaxOrderByAggregateInput
@@ -264,6 +278,7 @@ export type RecruiterScalarWhereWithAggregatesInput = {
   emailVerified?: Prisma.BoolWithAggregatesFilter<"Recruiter"> | boolean
   companyName?: Prisma.StringWithAggregatesFilter<"Recruiter"> | string
   companyLogoUrl?: Prisma.StringNullableWithAggregatesFilter<"Recruiter"> | string | null
+  passwordChangedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Recruiter"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Recruiter"> | Date | string
 }
 
@@ -275,9 +290,11 @@ export type RecruiterCreateInput = {
   emailVerified?: boolean
   companyName: string
   companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
   createdAt?: Date | string
   jobs?: Prisma.JobCreateNestedManyWithoutRecruiterInput
   verifyTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutRecruiterInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutRecruiterInput
 }
 
 export type RecruiterUncheckedCreateInput = {
@@ -288,9 +305,11 @@ export type RecruiterUncheckedCreateInput = {
   emailVerified?: boolean
   companyName: string
   companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
   createdAt?: Date | string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutRecruiterInput
   verifyTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutRecruiterInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutRecruiterInput
 }
 
 export type RecruiterUpdateInput = {
@@ -301,9 +320,11 @@ export type RecruiterUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUpdateManyWithoutRecruiterNestedInput
   verifyTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutRecruiterNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutRecruiterNestedInput
 }
 
 export type RecruiterUncheckedUpdateInput = {
@@ -314,9 +335,11 @@ export type RecruiterUncheckedUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutRecruiterNestedInput
   verifyTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutRecruiterNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutRecruiterNestedInput
 }
 
 export type RecruiterCreateManyInput = {
@@ -327,6 +350,7 @@ export type RecruiterCreateManyInput = {
   emailVerified?: boolean
   companyName: string
   companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -338,6 +362,7 @@ export type RecruiterUpdateManyMutationInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -349,6 +374,7 @@ export type RecruiterUncheckedUpdateManyInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -360,6 +386,7 @@ export type RecruiterCountOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   companyLogoUrl?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -371,6 +398,7 @@ export type RecruiterMaxOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   companyLogoUrl?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -382,6 +410,7 @@ export type RecruiterMinOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   companyLogoUrl?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -422,6 +451,20 @@ export type RecruiterUpdateOneRequiredWithoutJobsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RecruiterUpdateToOneWithWhereWithoutJobsInput, Prisma.RecruiterUpdateWithoutJobsInput>, Prisma.RecruiterUncheckedUpdateWithoutJobsInput>
 }
 
+export type RecruiterCreateNestedOneWithoutPasswordResetTokensInput = {
+  create?: Prisma.XOR<Prisma.RecruiterCreateWithoutPasswordResetTokensInput, Prisma.RecruiterUncheckedCreateWithoutPasswordResetTokensInput>
+  connectOrCreate?: Prisma.RecruiterCreateOrConnectWithoutPasswordResetTokensInput
+  connect?: Prisma.RecruiterWhereUniqueInput
+}
+
+export type RecruiterUpdateOneRequiredWithoutPasswordResetTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.RecruiterCreateWithoutPasswordResetTokensInput, Prisma.RecruiterUncheckedCreateWithoutPasswordResetTokensInput>
+  connectOrCreate?: Prisma.RecruiterCreateOrConnectWithoutPasswordResetTokensInput
+  upsert?: Prisma.RecruiterUpsertWithoutPasswordResetTokensInput
+  connect?: Prisma.RecruiterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RecruiterUpdateToOneWithWhereWithoutPasswordResetTokensInput, Prisma.RecruiterUpdateWithoutPasswordResetTokensInput>, Prisma.RecruiterUncheckedUpdateWithoutPasswordResetTokensInput>
+}
+
 export type RecruiterCreateWithoutVerifyTokensInput = {
   id?: string
   name: string
@@ -430,8 +473,10 @@ export type RecruiterCreateWithoutVerifyTokensInput = {
   emailVerified?: boolean
   companyName: string
   companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
   createdAt?: Date | string
   jobs?: Prisma.JobCreateNestedManyWithoutRecruiterInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutRecruiterInput
 }
 
 export type RecruiterUncheckedCreateWithoutVerifyTokensInput = {
@@ -442,8 +487,10 @@ export type RecruiterUncheckedCreateWithoutVerifyTokensInput = {
   emailVerified?: boolean
   companyName: string
   companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
   createdAt?: Date | string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutRecruiterInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutRecruiterInput
 }
 
 export type RecruiterCreateOrConnectWithoutVerifyTokensInput = {
@@ -470,8 +517,10 @@ export type RecruiterUpdateWithoutVerifyTokensInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUpdateManyWithoutRecruiterNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutRecruiterNestedInput
 }
 
 export type RecruiterUncheckedUpdateWithoutVerifyTokensInput = {
@@ -482,8 +531,10 @@ export type RecruiterUncheckedUpdateWithoutVerifyTokensInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutRecruiterNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutRecruiterNestedInput
 }
 
 export type RecruiterCreateWithoutJobsInput = {
@@ -494,8 +545,10 @@ export type RecruiterCreateWithoutJobsInput = {
   emailVerified?: boolean
   companyName: string
   companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
   createdAt?: Date | string
   verifyTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutRecruiterInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutRecruiterInput
 }
 
 export type RecruiterUncheckedCreateWithoutJobsInput = {
@@ -506,8 +559,10 @@ export type RecruiterUncheckedCreateWithoutJobsInput = {
   emailVerified?: boolean
   companyName: string
   companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
   createdAt?: Date | string
   verifyTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutRecruiterInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutRecruiterInput
 }
 
 export type RecruiterCreateOrConnectWithoutJobsInput = {
@@ -534,8 +589,10 @@ export type RecruiterUpdateWithoutJobsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verifyTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutRecruiterNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutRecruiterNestedInput
 }
 
 export type RecruiterUncheckedUpdateWithoutJobsInput = {
@@ -546,7 +603,81 @@ export type RecruiterUncheckedUpdateWithoutJobsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifyTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutRecruiterNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutRecruiterNestedInput
+}
+
+export type RecruiterCreateWithoutPasswordResetTokensInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  emailVerified?: boolean
+  companyName: string
+  companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
+  createdAt?: Date | string
+  jobs?: Prisma.JobCreateNestedManyWithoutRecruiterInput
+  verifyTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutRecruiterInput
+}
+
+export type RecruiterUncheckedCreateWithoutPasswordResetTokensInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  emailVerified?: boolean
+  companyName: string
+  companyLogoUrl?: string | null
+  passwordChangedAt?: Date | string | null
+  createdAt?: Date | string
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutRecruiterInput
+  verifyTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutRecruiterInput
+}
+
+export type RecruiterCreateOrConnectWithoutPasswordResetTokensInput = {
+  where: Prisma.RecruiterWhereUniqueInput
+  create: Prisma.XOR<Prisma.RecruiterCreateWithoutPasswordResetTokensInput, Prisma.RecruiterUncheckedCreateWithoutPasswordResetTokensInput>
+}
+
+export type RecruiterUpsertWithoutPasswordResetTokensInput = {
+  update: Prisma.XOR<Prisma.RecruiterUpdateWithoutPasswordResetTokensInput, Prisma.RecruiterUncheckedUpdateWithoutPasswordResetTokensInput>
+  create: Prisma.XOR<Prisma.RecruiterCreateWithoutPasswordResetTokensInput, Prisma.RecruiterUncheckedCreateWithoutPasswordResetTokensInput>
+  where?: Prisma.RecruiterWhereInput
+}
+
+export type RecruiterUpdateToOneWithWhereWithoutPasswordResetTokensInput = {
+  where?: Prisma.RecruiterWhereInput
+  data: Prisma.XOR<Prisma.RecruiterUpdateWithoutPasswordResetTokensInput, Prisma.RecruiterUncheckedUpdateWithoutPasswordResetTokensInput>
+}
+
+export type RecruiterUpdateWithoutPasswordResetTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobs?: Prisma.JobUpdateManyWithoutRecruiterNestedInput
+  verifyTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutRecruiterNestedInput
+}
+
+export type RecruiterUncheckedUpdateWithoutPasswordResetTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutRecruiterNestedInput
   verifyTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutRecruiterNestedInput
 }
 
@@ -558,11 +689,13 @@ export type RecruiterUncheckedUpdateWithoutJobsInput = {
 export type RecruiterCountOutputType = {
   jobs: number
   verifyTokens: number
+  passwordResetTokens: number
 }
 
 export type RecruiterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobs?: boolean | RecruiterCountOutputTypeCountJobsArgs
   verifyTokens?: boolean | RecruiterCountOutputTypeCountVerifyTokensArgs
+  passwordResetTokens?: boolean | RecruiterCountOutputTypeCountPasswordResetTokensArgs
 }
 
 /**
@@ -589,6 +722,13 @@ export type RecruiterCountOutputTypeCountVerifyTokensArgs<ExtArgs extends runtim
   where?: Prisma.EmailVerificationTokenWhereInput
 }
 
+/**
+ * RecruiterCountOutputType without action
+ */
+export type RecruiterCountOutputTypeCountPasswordResetTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PasswordResetTokenWhereInput
+}
+
 
 export type RecruiterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -598,9 +738,11 @@ export type RecruiterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   emailVerified?: boolean
   companyName?: boolean
   companyLogoUrl?: boolean
+  passwordChangedAt?: boolean
   createdAt?: boolean
   jobs?: boolean | Prisma.Recruiter$jobsArgs<ExtArgs>
   verifyTokens?: boolean | Prisma.Recruiter$verifyTokensArgs<ExtArgs>
+  passwordResetTokens?: boolean | Prisma.Recruiter$passwordResetTokensArgs<ExtArgs>
   _count?: boolean | Prisma.RecruiterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["recruiter"]>
 
@@ -612,6 +754,7 @@ export type RecruiterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   emailVerified?: boolean
   companyName?: boolean
   companyLogoUrl?: boolean
+  passwordChangedAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["recruiter"]>
 
@@ -623,6 +766,7 @@ export type RecruiterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   emailVerified?: boolean
   companyName?: boolean
   companyLogoUrl?: boolean
+  passwordChangedAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["recruiter"]>
 
@@ -634,13 +778,15 @@ export type RecruiterSelectScalar = {
   emailVerified?: boolean
   companyName?: boolean
   companyLogoUrl?: boolean
+  passwordChangedAt?: boolean
   createdAt?: boolean
 }
 
-export type RecruiterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "emailVerified" | "companyName" | "companyLogoUrl" | "createdAt", ExtArgs["result"]["recruiter"]>
+export type RecruiterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "emailVerified" | "companyName" | "companyLogoUrl" | "passwordChangedAt" | "createdAt", ExtArgs["result"]["recruiter"]>
 export type RecruiterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobs?: boolean | Prisma.Recruiter$jobsArgs<ExtArgs>
   verifyTokens?: boolean | Prisma.Recruiter$verifyTokensArgs<ExtArgs>
+  passwordResetTokens?: boolean | Prisma.Recruiter$passwordResetTokensArgs<ExtArgs>
   _count?: boolean | Prisma.RecruiterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RecruiterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -651,6 +797,7 @@ export type $RecruiterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     jobs: Prisma.$JobPayload<ExtArgs>[]
     verifyTokens: Prisma.$EmailVerificationTokenPayload<ExtArgs>[]
+    passwordResetTokens: Prisma.$PasswordResetTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -660,6 +807,7 @@ export type $RecruiterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     emailVerified: boolean
     companyName: string
     companyLogoUrl: string | null
+    passwordChangedAt: Date | null
     createdAt: Date
   }, ExtArgs["result"]["recruiter"]>
   composites: {}
@@ -1057,6 +1205,7 @@ export interface Prisma__RecruiterClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   jobs<T extends Prisma.Recruiter$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Recruiter$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   verifyTokens<T extends Prisma.Recruiter$verifyTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Recruiter$verifyTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailVerificationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  passwordResetTokens<T extends Prisma.Recruiter$passwordResetTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Recruiter$passwordResetTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1093,6 +1242,7 @@ export interface RecruiterFieldRefs {
   readonly emailVerified: Prisma.FieldRef<"Recruiter", 'Boolean'>
   readonly companyName: Prisma.FieldRef<"Recruiter", 'String'>
   readonly companyLogoUrl: Prisma.FieldRef<"Recruiter", 'String'>
+  readonly passwordChangedAt: Prisma.FieldRef<"Recruiter", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Recruiter", 'DateTime'>
 }
     
@@ -1532,6 +1682,30 @@ export type Recruiter$verifyTokensArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.EmailVerificationTokenScalarFieldEnum | Prisma.EmailVerificationTokenScalarFieldEnum[]
+}
+
+/**
+ * Recruiter.passwordResetTokens
+ */
+export type Recruiter$passwordResetTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PasswordResetToken
+   */
+  select?: Prisma.PasswordResetTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PasswordResetToken
+   */
+  omit?: Prisma.PasswordResetTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PasswordResetTokenInclude<ExtArgs> | null
+  where?: Prisma.PasswordResetTokenWhereInput
+  orderBy?: Prisma.PasswordResetTokenOrderByWithRelationInput | Prisma.PasswordResetTokenOrderByWithRelationInput[]
+  cursor?: Prisma.PasswordResetTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PasswordResetTokenScalarFieldEnum | Prisma.PasswordResetTokenScalarFieldEnum[]
 }
 
 /**

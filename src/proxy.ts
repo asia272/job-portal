@@ -8,6 +8,8 @@ const isRecruiterPublic = createRouteMatcher([
     "/recruiter/login",
     "/recruiter/register",
     "/recruiter/verify-email",
+    "/recruiter/forgot-password",
+    "/recruiter/reset-password",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {

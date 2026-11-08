@@ -1,10 +1,21 @@
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getCurrentCandidate } from "@/lib/candidate";
 import ResumeUploader from "@/components/resume-uploader";
 import ApplicationsTable from "@/components/applications-table";
 
-export default async function MyApplications() {
+export default function MyApplicationsPage() {
+    return (
+        <main className="mx-auto max-w-4xl px-4 py-8">
+            <Suspense fallback={<p className="text-sm text-gray-500">Loading...</p>}>
+                <Content />
+            </Suspense>
+        </main>
+    );
+}
+
+async function Content() {
     const candidate = await getCurrentCandidate();
     if (!candidate) redirect("/sign-in");
 
@@ -14,7 +25,9 @@ export default async function MyApplications() {
         include: {
             job: {
                 select: {
-                    id: true, title: true, location: true,
+                    id: true,
+                    title: true,
+                    location: true,
                     recruiter: { select: { companyName: true, companyLogoUrl: true } },
                 },
             },
@@ -22,12 +35,14 @@ export default async function MyApplications() {
     });
 
     return (
-        <main className="mx-auto max-w-4xl px-4 py-8">
+        <>
             <h2 className="font-semibold">Your Resume</h2>
-            <ResumeUploader resumeUrl={candidate.resumeUrl} fileName={candidate.resumeFileName} />
+            <div className="mt-3">
+                <ResumeUploader resumeUrl={candidate.resumeUrl} fileName={candidate.resumeFileName} />
+            </div>
 
-            <h2 className="mt-8 font-semibold">Jobs Applied</h2>
+            <h2 className="mt-10 font-semibold">Jobs Applied</h2>
             <ApplicationsTable applications={applications} />
-        </main>
+        </>
     );
 }

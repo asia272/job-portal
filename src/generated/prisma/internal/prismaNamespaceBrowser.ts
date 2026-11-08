@@ -55,7 +55,8 @@ export const ModelName = {
   Recruiter: 'Recruiter',
   EmailVerificationToken: 'EmailVerificationToken',
   Job: 'Job',
-  Application: 'Application'
+  Application: 'Application',
+  PasswordResetToken: 'PasswordResetToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -98,6 +99,7 @@ export const RecruiterScalarFieldEnum = {
   emailVerified: 'emailVerified',
   companyName: 'companyName',
   companyLogoUrl: 'companyLogoUrl',
+  passwordChangedAt: 'passwordChangedAt',
   createdAt: 'createdAt'
 } as const
 
@@ -144,6 +146,16 @@ export const ApplicationScalarFieldEnum = {
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  recruiterId: 'recruiterId'
+} as const
+
+export type PasswordResetTokenScalarFieldEnum = (typeof PasswordResetTokenScalarFieldEnum)[keyof typeof PasswordResetTokenScalarFieldEnum]
 
 
 export const SortOrder = {

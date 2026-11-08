@@ -42,3 +42,8 @@ export type Job = Prisma.JobModel
  * 
  */
 export type Application = Prisma.ApplicationModel
+/**
+ * Model PasswordResetToken
+ * 
+ */
+export type PasswordResetToken = Prisma.PasswordResetTokenModel

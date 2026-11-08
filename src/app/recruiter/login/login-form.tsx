@@ -4,6 +4,7 @@ import { loginRecruiter } from "@/actions/recruiter-auth";
 import type { FormState } from "@/lib/form-state";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "lucide-react";
 
 export default function LoginForm() {
     const [state, action, pending] = useActionState<FormState, FormData>(loginRecruiter, {});
@@ -29,7 +30,12 @@ export default function LoginForm() {
             </div>
 
             <div className="space-y-1">
-                <label htmlFor="password" className="text-sm font-medium">Password</label>
+                <div className="flex items-center justify-between">
+                    <label htmlFor="password" className="text-sm font-medium">Password</label>
+                    <Link href="/recruiter/forgot-password" className="text-xs text-blue-600 hover:underline">
+                        Forgot password?
+                    </Link>
+                </div>
                 <Input
                     id="password"
                     name="password"
