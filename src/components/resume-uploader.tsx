@@ -1,8 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import { Upload, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Upload } from "lucide-react";
 import { getUploadSignature, saveResume } from "@/actions/resume";
 
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
@@ -65,38 +64,47 @@ export default function ResumeUploader({
         }
     }
 
+    const open = () => inputRef.current?.click();
+
     return (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-3">
             {resumeUrl ? (
                 <a
                     href={resumeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded bg-blue-50 px-3 py-1.5 text-sm text-blue-600 hover:underline"
+                    className="inline-flex h-9 max-w-[220px] items-center truncate rounded-[4px] bg-[#EFF5FF] px-4 text-[15px] text-[#0260FF] hover:underline"
                 >
-                    <FileText className="h-4 w-4" />
-                    {fileName ?? "resume.pdf"}
+                    <span className="truncate">{fileName ?? "resume"}</span>
                 </a>
             ) : (
-                <span className="text-sm text-gray-500">No resume uploaded yet</span>
+                <span className="text-[15px] text-[#797484]">No resume uploaded yet</span>
             )}
 
             <input ref={inputRef} type="file" accept="application/pdf" hidden onChange={onFile} />
 
             {resumeUrl && (
-                <Button variant="outline" size="sm" disabled={loading} onClick={() => inputRef.current?.click()}>
-                    {loading ? "Uploading..." : "Edit"}
-                </Button>
+                <button
+                    type="button"
+                    onClick={open}
+                    disabled={loading}
+                    className="inline-flex h-9 w-[79px] cursor-pointer items-center justify-center rounded-[4px] border border-[#818181] bg-white text-[15px] text-[#818181] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                    {loading ? "..." : "Edit"}
+                </button>
             )}
-            <Button
-                size={resumeUrl ? "icon" : "sm"}
+
+            <button
+                type="button"
+                onClick={open}
                 disabled={loading}
-                onClick={() => inputRef.current?.click()}
-                aria-label="Upload resume"
+                aria-label={resumeUrl ? "Upload a new resume" : "Upload resume"}
+                className={`inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-[4px] border border-[#0260FF] bg-[#0260FF] text-white transition-colors hover:bg-[#0150D6] disabled:cursor-not-allowed disabled:opacity-60 ${resumeUrl ? "w-9" : "px-4 text-[15px]"
+                    }`}
             >
-                <Upload className="h-4 w-4" />
-                {!resumeUrl && <span className="ml-2">{loading ? "Uploading..." : "Upload resume (PDF)"}</span>}
-            </Button>
+                <Upload className="size-[18px]" aria-hidden />
+                {!resumeUrl && <span>{loading ? "Uploading..." : "Upload resume (PDF)"}</span>}
+            </button>
         </div>
     );
 }

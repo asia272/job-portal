@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Search, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function HeroSearch() {
     const router = useRouter();
@@ -22,22 +21,51 @@ export default function HeroSearch() {
     }
 
     return (
-        <section className="mt-6 rounded-2xl bg-gradient-to-br from-purple-900 to-black px-6 py-14 text-center text-white">
-            <h1 className="text-3xl font-semibold md:text-4xl">Over 10,000+ jobs to apply</h1>
-            <p className="mx-auto mt-3 max-w-md text-xs text-white/80">
-                Your Next Big Career Move Starts Right Here - Explore The Best Job Opportunities
-                And Take The First Step Toward Your Future!
+        <section className="mt-9 flex flex-col items-center rounded-[15px] bg-[linear-gradient(90deg,#4F0487_0%,#130121_100%)] px-4 py-12 text-center text-white lg:h-[354px] lg:pt-[65px] lg:pb-0">
+            <h1 className="text-[28px] leading-[1.25] font-medium sm:text-[40px] sm:leading-[60px]">
+                Over 10,000+ jobs to apply
+            </h1>
+
+            <p className="mt-[18px] max-w-[720px] text-[14px] leading-[22px] capitalize">
+                Your Next Big Career Move Starts Right Here - Explore the Best Job Opportunities and Take
+                the First Step Toward Your Future!
             </p>
-            <form onSubmit={onSubmit} className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-lg bg-white p-2 text-black">
-                <div className="flex flex-1 items-center gap-2 px-2">
-                    <Search className="h-4 w-4 text-gray-400" />
-                    <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search for jobs" className="w-full text-sm outline-none" />
+
+            <form
+                onSubmit={onSubmit}
+                role="search"
+                className="mt-8 flex h-[54px] w-full max-w-[599px] items-center rounded-[5px] bg-white p-[6px] text-[#424242] shadow-[0px_4px_15px_0px_#0000000D]"
+            >
+                <div className="flex flex-[2] items-center gap-3 px-3">
+                    <Image src="/assets/search_icon.svg" alt="" width={20} height={20} className="shrink-0" />
+                    <input
+                        value={q}
+                        onChange={(e) => setQ(e.target.value)}
+                        placeholder="Search for jobs"
+                        aria-label="Search for jobs"
+                        className="w-full min-w-0 bg-transparent text-[16px] outline-none placeholder:text-[#797484]"
+                    />
                 </div>
-                <div className="hidden flex-1 items-center gap-2 border-l px-2 sm:flex">
-                    <MapPin className="h-4 w-4 text-gray-400" />
-                    <input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Location" className="w-full text-sm outline-none" />
+
+                <span aria-hidden className="hidden h-[30px] w-px bg-[#BDBDBD] sm:block" />
+
+                <div className="hidden flex-1 items-center gap-3 px-4 sm:flex">
+                    <Image src="/assets/location_icon.svg" alt="" width={20} height={20} className="shrink-0" />
+                    <input
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        placeholder="Location"
+                        aria-label="Location"
+                        className="w-full min-w-0 bg-transparent text-[16px] outline-none placeholder:text-[#797484]"
+                    />
                 </div>
-                <Button type="submit">Search</Button>
+
+                <button
+                    type="submit"
+                    className="h-full w-[100px] shrink-0 cursor-pointer rounded-[5px] bg-[#0260FF] text-[16px] text-white transition-colors hover:bg-[#0150D6] sm:w-[146px]"
+                >
+                    Search
+                </button>
             </form>
         </section>
     );

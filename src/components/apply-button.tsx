@@ -2,10 +2,12 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import { applyToJob } from "@/actions/apply";
 
 export type ApplyState = "guest" | "no-resume" | "can-apply" | "applied";
+
+const BASE =
+    "inline-flex h-[50px] w-[180px] items-center justify-center rounded-[5px] text-[16px] shadow-[0px_4px_15px_0px_#0000000D] transition-colors";
 
 export default function ApplyButton({
     jobId,
@@ -19,9 +21,13 @@ export default function ApplyButton({
 
     if (state === "applied") {
         return (
-            <Button disabled variant="secondary">
+            <button
+                type="button"
+                disabled
+                className={`${BASE} cursor-not-allowed border border-[#0260FF] bg-white text-[#0260FF]`}
+            >
                 Already Applied
-            </Button>
+            </button>
         );
     }
 
@@ -50,8 +56,13 @@ export default function ApplyButton({
     }
 
     return (
-        <Button onClick={onClick} disabled={pending}>
+        <button
+            type="button"
+            onClick={onClick}
+            disabled={pending}
+            className={`${BASE} cursor-pointer bg-[#0260FF] text-white hover:bg-[#0150D6] disabled:cursor-not-allowed disabled:opacity-70`}
+        >
             {pending ? "Applying..." : "Apply now"}
-        </Button>
+        </button>
     );
 }

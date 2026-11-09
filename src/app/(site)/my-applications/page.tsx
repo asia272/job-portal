@@ -7,10 +7,12 @@ import ApplicationsTable from "@/components/applications-table";
 
 export default function MyApplicationsPage() {
     return (
-        <main className="mx-auto max-w-4xl px-4 py-8">
-            <Suspense fallback={<p className="text-sm text-gray-500">Loading...</p>}>
-                <Content />
-            </Suspense>
+        <main className="mx-auto w-full max-w-[1231px] px-4 pt-8 pb-20">
+            <div className="max-w-[940px]">
+                <Suspense fallback={<p className="text-sm text-[#797484]">Loading...</p>}>
+                    <Content />
+                </Suspense>
+            </div>
         </main>
     );
 }
@@ -36,12 +38,12 @@ async function Content() {
 
     return (
         <>
-            <h2 className="font-semibold">Your Resume</h2>
-            <div className="mt-3">
+            <h2 className="text-[20px] leading-[30px] font-medium text-[#252525]">Your Resume</h2>
+            <div className="mt-4">
                 <ResumeUploader resumeUrl={candidate.resumeUrl} fileName={candidate.resumeFileName} />
             </div>
 
-            <h2 className="mt-10 font-semibold">Jobs Applied</h2>
+            <h2 className="mt-12 text-[20px] leading-[30px] font-medium text-[#252525]">Jobs Applied</h2>
             <ApplicationsTable applications={applications} />
         </>
     );
