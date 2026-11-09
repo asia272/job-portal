@@ -1,3 +1,4 @@
+import { SectionLoader } from "@/components/loader";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -7,7 +8,7 @@ import JobForm from "@/components/job-form";
 
 export default function EditJobPage({ params }: { params: Promise<{ id: string }> }) {
     return (
-        <Suspense fallback={<p className="text-sm text-gray-500">Loading...</p>}>
+        <Suspense fallback={<SectionLoader />}>
             <Content params={params} />
         </Suspense>
     );

@@ -1,3 +1,4 @@
+import { SectionLoader } from "@/components/loader";
 import { Suspense } from "react";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
@@ -16,7 +17,7 @@ const TABS: { label: string; value?: Status }[] = [
 
 export default function ApplicationsPage({ searchParams }: { searchParams: Promise<SP> }) {
     return (
-        <Suspense fallback={<p className="text-sm text-gray-500">Loading...</p>}>
+        <Suspense fallback={<SectionLoader />}>
             <Content searchParams={searchParams} />
         </Suspense>
     );
@@ -28,6 +29,8 @@ async function Content({ searchParams }: { searchParams: Promise<SP> }) {
 
     const filter = TABS.find((t) => t.value && t.value === status)?.value;
 
+
+    //Get all applications for the recruiter
     const applications = await prisma.application.findMany({
         where: {
             job: { recruiterId: recruiter.id },

@@ -13,6 +13,7 @@ import {
     Globe,
 } from "lucide-react";
 import { logoutRecruiter } from "@/actions/recruiter-auth";
+import Logo from "./logo";
 
 type Props = {
     recruiter: { name: string; email: string; companyName: string };
@@ -61,7 +62,7 @@ export default function RecruiterShell({ recruiter, children }: Props) {
             >
                 <div className="flex h-16 items-center justify-between border-b px-5">
                     <Link href="/recruiter/dashboard" className="text-xl font-bold">
-                        Insider<span className="font-normal">jobs</span>
+                        <Logo href="/recruiter/dashboard" priority />
                     </Link>
                     <button
                         className="lg:hidden"
@@ -81,8 +82,8 @@ export default function RecruiterShell({ recruiter, children }: Props) {
                                 href={href}
                                 onClick={() => setOpen(false)}
                                 className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${active
-                                        ? "bg-blue-50 font-medium text-blue-700"
-                                        : "text-gray-600 hover:bg-gray-100"
+                                    ? "bg-blue-50 font-medium text-blue-700"
+                                    : "text-gray-600 hover:bg-gray-100"
                                     }`}
                             >
                                 <Icon className="h-4 w-4" />

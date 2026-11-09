@@ -10,7 +10,7 @@ import JobCard from "@/components/job-card";
 
 export default function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
     return (
-        <main className="mx-auto w-full max-w-[1231px] px-4 pb-20">
+        <main className="w-full  pb-20">
             <Suspense
                 fallback={
                     <div className="mt-6 h-[232px] rounded-[10px] border border-[#0260FF] bg-[#F2F7FF]" />

@@ -1,3 +1,4 @@
+import { SectionLoader } from "@/components/loader";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -7,9 +8,9 @@ import ApplicationsTable from "@/components/applications-table";
 
 export default function MyApplicationsPage() {
     return (
-        <main className="mx-auto w-full max-w-[1231px] px-4 pt-8 pb-20">
+        <main className="w-full pt-8 pb-20">
             <div className="max-w-[940px]">
-                <Suspense fallback={<p className="text-sm text-[#797484]">Loading...</p>}>
+                <Suspense fallback={<SectionLoader />}>
                     <Content />
                 </Suspense>
             </div>

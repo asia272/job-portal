@@ -1,3 +1,4 @@
+import { SectionLoader } from "@/components/loader";
 import { Suspense } from "react";
 import Link from "next/link";
 import ResetForm from "./reset-form";
@@ -13,7 +14,7 @@ export default function ResetPasswordPage({ searchParams }: { searchParams: Prom
 
             <div className="rounded-xl border p-6 shadow-sm">
                 <h1 className="text-xl font-semibold">Choose a new password</h1>
-                <Suspense fallback={<p className="mt-4 text-sm text-gray-500">Loading...</p>}>
+                <Suspense fallback={<SectionLoader />}>
                     <Content searchParams={searchParams} />
                 </Suspense>
             </div>

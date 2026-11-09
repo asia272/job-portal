@@ -1,7 +1,6 @@
 "use client";
 import { useTransition } from "react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import { updateApplicationStatus } from "@/actions/recruiter-jobs";
 
 type Status = "PENDING" | "ACCEPTED" | "REJECTED";
@@ -32,31 +31,33 @@ export default function ApplicationActions({
         });
     }
 
+    const BTN =
+        "inline-flex h-9 cursor-pointer items-center justify-center rounded-[4px] px-4 text-[14px] transition-colors disabled:cursor-not-allowed disabled:opacity-50";
+
     return (
         <div className="flex items-center gap-2">
-            <Button
-                size="sm"
+            <button
+                type="button"
                 disabled={pending || status === "ACCEPTED"}
                 onClick={() => change("ACCEPTED")}
-                className="bg-green-600 hover:bg-green-700"
+                className={`${BTN} bg-[#0260FF] text-white hover:bg-[#0150D6]`}
             >
                 Accept
-            </Button>
-            <Button
-                size="sm"
-                variant="outline"
+            </button>
+            <button
+                type="button"
                 disabled={pending || status === "REJECTED"}
                 onClick={() => change("REJECTED")}
-                className="border-red-200 text-red-600 hover:bg-red-50"
+                className={`${BTN} border border-[#FFBABA] bg-[#FFF5F3] text-[#D92D2D] hover:bg-[#FFE8E3]`}
             >
                 Reject
-            </Button>
+            </button>
             {status !== "PENDING" && (
                 <button
                     type="button"
                     disabled={pending}
                     onClick={() => change("PENDING")}
-                    className="text-xs text-gray-500 underline disabled:opacity-50"
+                    className="cursor-pointer text-[13px] text-[#797484] underline disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     Undo
                 </button>

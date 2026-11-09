@@ -5,7 +5,7 @@ import JobCard from "@/components/job-card";
 import FilterSidebar from "@/components/filter-sidebar";
 import HeroSearch from "@/components/hero-search";
 import JobPagination from "@/components/job-pagination";
-
+import Loading from "@/app/loading";
 import AppDownloadBanner from "@/components/app-download-banner";
 import TrustedBy from "@/components/trusted";
 
@@ -21,7 +21,7 @@ const toArray = (v?: string | string[]) =>
 
 export default function Home({ searchParams }: { searchParams: Promise<SP> }) {
   return (
-    <main className="mx-auto w-full max-w-[1391px] px-2 pb-16">
+    <main className=" w-full pb-16">
       <Suspense fallback={<HomeSkeleton />}>
         <HomeContent searchParams={searchParams} />
       </Suspense>
@@ -45,8 +45,7 @@ export default function Home({ searchParams }: { searchParams: Promise<SP> }) {
 function HomeSkeleton() {
   return (
     <>
-      <div className="mt-9 h-[354px] rounded-[15px] bg-[linear-gradient(90deg,#4F0487_0%,#130121_100%)]" />
-      <p className="py-20 text-center text-sm text-[#797484]">Loading jobs...</p>
+      <Loading />
     </>
   );
 }
