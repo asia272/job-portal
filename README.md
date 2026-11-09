@@ -4,7 +4,7 @@ A full-stack job portal built with Next.js. Candidates browse, filter and apply 
 
 ![Insiderjobs preview](public/preview.png)
 
-## Features
+## Features.
 
 **Candidates**
 - Sign up and sign in with Clerk (email verification handled by Clerk)
