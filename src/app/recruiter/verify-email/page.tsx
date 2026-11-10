@@ -1,24 +1,26 @@
-import { SectionLoader } from "@/components/loader";
 import { Suspense } from "react";
-import Link from "next/link";
+import AuthCard from "@/components/auth-card";
+import { Spinner } from "@/components/loader";
 import VerifyForm from "./verify-form";
 
 type SP = { token?: string | string[] };
 
 export default function VerifyEmailPage({ searchParams }: { searchParams: Promise<SP> }) {
     return (
-        <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-10">
-            <Link href="/" className="mb-8 text-center text-2xl font-bold">
-                Insiderjobs
-            </Link>
-
-            <div className="rounded-xl border p-6 shadow-sm">
-                <h1 className="text-xl font-semibold">Verify your email</h1>
-                <Suspense fallback={<SectionLoader />}>
-                    <Content searchParams={searchParams} />
-                </Suspense>
-            </div>
-        </main>
+        <AuthCard
+            title="Verify Email"
+            subtitle="Confirm your email address to activate your recruiter account"
+        >
+            <Suspense
+                fallback={
+                    <div className="mt-8 flex justify-center">
+                        <Spinner size={40} />
+                    </div>
+                }
+            >
+                <Content searchParams={searchParams} />
+            </Suspense>
+        </AuthCard>
     );
 }
 
@@ -28,18 +30,11 @@ async function Content({ searchParams }: { searchParams: Promise<SP> }) {
 
     if (!value) {
         return (
-            <p className="mt-4 text-sm text-red-600">
+            <p className="mt-8 rounded-[8px] border border-red-200 bg-red-50 p-4 text-center text-[15px] text-red-700">
                 This verification link is invalid. Please use the link from your email.
             </p>
         );
     }
 
-    return (
-        <>
-            <p className="mt-1 text-sm text-gray-500">
-                Click the button below to confirm your email address and activate your account.
-            </p>
-            <VerifyForm token={value} />
-        </>
-    );
+    return <VerifyForm token={value} />;
 }

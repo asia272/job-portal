@@ -1,43 +1,10 @@
 "use client";
 import { useActionState } from "react";
+import Link from "next/link";
 import { registerRecruiter } from "@/actions/recruiter-auth";
 import type { FormState } from "@/lib/form-state";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-function Field({
-    label,
-    name,
-    type = "text",
-    defaultValue,
-    error,
-    autoComplete,
-    hint,
-}: {
-    label: string;
-    name: string;
-    type?: string;
-    defaultValue?: string;
-    error?: string;
-    autoComplete?: string;
-    hint?: string;
-}) {
-    return (
-        <div className="space-y-1">
-            <label htmlFor={name} className="text-sm font-medium">{label}</label>
-            <Input
-                id={name}
-                name={name}
-                type={type}
-                defaultValue={defaultValue}
-                autoComplete={autoComplete}
-                required
-            />
-            {hint && !error && <p className="text-xs text-gray-500">{hint}</p>}
-            {error && <p className="text-xs text-red-600">{error}</p>}
-        </div>
-    );
-}
+import PillInput from "@/components/pill-input";
+import { ButtonSpinner } from "@/components/loader";
 
 export default function RegisterForm() {
     const [state, action, pending] = useActionState<FormState, FormData>(registerRecruiter, {});
@@ -45,35 +12,93 @@ export default function RegisterForm() {
 
     if (state.success) {
         return (
-            <p className="mt-6 rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-700">
-                {state.success}
-            </p>
+            <div className="mt-8">
+                <p
+                    role="status"
+                    className="rounded-[8px] border border-green-200 bg-green-50 p-4 text-center text-[15px] leading-6 text-green-700"
+                >
+                    {state.success}
+                </p>
+                <p className="mt-6 text-center text-[16px] text-[#797484]">
+                    <Link href="/recruiter/login" className="text-[#006CE2] underline">
+                        Back to login
+                    </Link>
+                </p>
+            </div>
         );
     }
 
     return (
-        <form action={action} className="mt-6 space-y-4">
+        <form action={action} className="mt-9 space-y-5">
             {state.error && (
-                <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                <p
+                    role="alert"
+                    className="rounded-[8px] border border-red-200 bg-red-50 p-3 text-[14px] text-red-700"
+                >
                     {state.error}
                 </p>
             )}
 
-            <Field label="Your name" name="name" autoComplete="name" defaultValue={state.values?.name} error={errors.name} />
-            <Field label="Company name" name="companyName" autoComplete="organization" defaultValue={state.values?.companyName} error={errors.companyName} />
-            <Field label="Work email" name="email" type="email" autoComplete="email" defaultValue={state.values?.email} error={errors.email} />
-            <Field
-                label="Password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                error={errors.password}
-                hint="At least 8 characters, with a letter and a number."
+            <PillInput
+                icon="/assets/person_icon.svg"
+                label="Your name"
+                name="name"
+                autoComplete="name"
+                defaultValue={state.values?.name}
+                error={errors.name}
+                required
             />
+            <PillInput
+                icon="/assets/company_icon.svg"
+                label="Company name"
+                name="companyName"
+                autoComplete="organization"
+                defaultValue={state.values?.companyName}
+                error={errors.companyName}
+                required
+            />
+            <PillInput
+                icon="/assets/email_icon.svg"
+                label="Work email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                defaultValue={state.values?.email}
+                error={errors.email}
+                required
+            />
+            <div>
+                <PillInput
+                    icon="/assets/lock_icon.svg"
+                    label="Password"
+                    name="password"
+                    type="password"
+                    autoComplete="new-password"
+                    error={errors.password}
+                    required
+                />
+                {!errors.password && (
+                    <p className="mt-1.5 px-5 text-[13px] text-[#797484]">
+                        At least 8 characters, with a letter and a number.
+                    </p>
+                )}
+            </div>
 
-            <Button type="submit" className="w-full" disabled={pending}>
+            <button
+                type="submit"
+                disabled={pending}
+                className="flex h-[53px] w-full cursor-pointer items-center justify-center gap-3 rounded-full bg-[#007AFF] text-[18px] text-white transition-colors hover:bg-[#0068D9] disabled:cursor-not-allowed disabled:opacity-80"
+            >
+                {pending && <ButtonSpinner />}
                 {pending ? "Creating account..." : "Create account"}
-            </Button>
+            </button>
+
+            <p className="pt-1 text-center text-[16px] text-[#797484]">
+                Already have an account?{" "}
+                <Link href="/recruiter/login" className="text-[#006CE2] underline">
+                    Login
+                </Link>
+            </p>
         </form>
     );
 }

@@ -49,11 +49,13 @@ export default function ResumeUploader({
             if (!res.ok) throw new Error("Upload failed. Please try again.");
             const uploaded = await res.json();
 
-            const saved = await saveResume({
-                secureUrl: uploaded.secure_url,
-                publicId: uploaded.public_id,
-                fileName: file.name,
-            });
+            const saved = await
+
+                saveResume({
+                    secureUrl: uploaded.secure_url,
+                    publicId: uploaded.public_id,
+                    fileName: file.name,
+                });
             if (saved.error) throw new Error(saved.error);
 
             toast.success(resumeUrl ? "Resume updated" : "Resume uploaded");

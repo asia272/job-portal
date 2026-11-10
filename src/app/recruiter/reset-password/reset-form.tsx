@@ -2,42 +2,61 @@
 import { useActionState } from "react";
 import { resetRecruiterPassword } from "@/actions/recruiter-auth";
 import type { FormState } from "@/lib/form-state";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import PillInput from "@/components/pill-input";
+import { ButtonSpinner } from "@/components/loader";
 
 export default function ResetForm({ token }: { token: string }) {
     const [state, action, pending] = useActionState<FormState, FormData>(resetRecruiterPassword, {});
     const errors = state.fieldErrors ?? {};
 
     return (
-        <form action={action} className="mt-6 space-y-4">
+        <form action={action} className="mt-9 space-y-5">
             <input type="hidden" name="token" value={token} />
 
             {state.error && (
-                <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                <p
+                    role="alert"
+                    className="rounded-[8px] border border-red-200 bg-red-50 p-3 text-[14px] text-red-700"
+                >
                     {state.error}
                 </p>
             )}
 
-            <div className="space-y-1">
-                <label htmlFor="password" className="text-sm font-medium">New password</label>
-                <Input id="password" name="password" type="password" autoComplete="new-password" required />
-                {errors.password ? (
-                    <p className="text-xs text-red-600">{errors.password}</p>
-                ) : (
-                    <p className="text-xs text-gray-500">At least 8 characters, with a letter and a number.</p>
+            <div>
+                <PillInput
+                    icon="/assets/lock_icon.svg"
+                    label="New password"
+                    name="password"
+                    type="password"
+                    autoComplete="new-password"
+                    error={errors.password}
+                    required
+                />
+                {!errors.password && (
+                    <p className="mt-1.5 px-5 text-[13px] text-[#797484]">
+                        At least 8 characters, with a letter and a number.
+                    </p>
                 )}
             </div>
 
-            <div className="space-y-1">
-                <label htmlFor="confirmPassword" className="text-sm font-medium">Confirm password</label>
-                <Input id="confirmPassword" name="confirmPassword" type="password" autoComplete="new-password" required />
-                {errors.confirmPassword && <p className="text-xs text-red-600">{errors.confirmPassword}</p>}
-            </div>
+            <PillInput
+                icon="/assets/lock_icon.svg"
+                label="Confirm password"
+                name="confirmPassword"
+                type="password"
+                autoComplete="new-password"
+                error={errors.confirmPassword}
+                required
+            />
 
-            <Button type="submit" className="w-full" disabled={pending}>
+            <button
+                type="submit"
+                disabled={pending}
+                className="flex h-[53px] w-full cursor-pointer items-center justify-center gap-3 rounded-full bg-[#007AFF] text-[18px] text-white transition-colors hover:bg-[#0068D9] disabled:cursor-not-allowed disabled:opacity-80"
+            >
+                {pending && <ButtonSpinner />}
                 {pending ? "Saving..." : "Reset password"}
-            </Button>
+            </button>
         </form>
     );
 }
