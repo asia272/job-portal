@@ -2,9 +2,19 @@
 
 A full-stack job portal built with Next.js. Candidates browse, filter and apply to jobs with one click. Recruiters sign up, verify their email, post jobs and manage applications from their own dashboard.
 
+[Live Demo](https://job-portal-one-ashen.vercel.app/) · [GitHub](https://github.com/asia272/job-portal) · [Figma Design](https://www.figma.com/design/D6tXxRWuiZho7Mj3LdZ6cF/Job-Portal-Design-File?node-id=0-1&t=bDpEva50pRX67m7n-1)
+
 ![Insiderjobs preview](public/preview.png)
 
-## Features.
+## Links
+
+| | |
+|---|---|
+| Live demo | https://job-portal-one-ashen.vercel.app/ |
+| Source code | https://github.com/asia272/job-portal |
+| Figma design file | https://www.figma.com/design/D6tXxRWuiZho7Mj3LdZ6cF/Job-Portal-Design-File?node-id=0-1&t=bDpEva50pRX67m7n-1 |
+
+## Features
 
 **Candidates**
 - Sign up and sign in with Clerk (email verification handled by Clerk)
@@ -35,6 +45,7 @@ A full-stack job portal built with Next.js. Candidates browse, filter and apply 
 | Email | Brevo |
 | File storage | Cloudinary (signed uploads) |
 | Validation | Zod |
+| Hosting | Vercel |
 
 ## Data model
 
@@ -58,8 +69,8 @@ Roles are not a column. A person is a candidate or a recruiter depending on whic
 ### 2. Install
 
 ```bash
-git clone <your-repo-url>
-cd insiderjobs
+git clone https://github.com/asia272/job-portal.git
+cd job-portal
 npm install
 ```
 
@@ -137,6 +148,10 @@ prisma/                Schema, migrations, seed script
 public/assets/         Logos and icons
 ```
 
+## Design
+
+The interface follows the [Figma design file](https://www.figma.com/design/D6tXxRWuiZho7Mj3LdZ6cF/Job-Portal-Design-File?node-id=0-1&t=bDpEva50pRX67m7n-1): Outfit typography, a `#0260FF` primary blue, and purple gradient banners. Candidate and recruiter screens share one logo, one loader and one set of form components.
+
 ## Security notes
 
 - Every server action validates input with Zod and checks the user on the server.
@@ -147,6 +162,8 @@ public/assets/         Logos and icons
 - Rate limiting is currently disabled (`src/lib/rate-limit.ts` allows every request). Add a real limiter before going to production.
 
 ## Deployment
+
+The live demo runs on Vercel. To deploy your own copy:
 
 1. Push the repository to GitHub and import it in Vercel.
 2. Add all environment variables, using Clerk production keys and your real `APP_URL`.
